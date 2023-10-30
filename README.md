@@ -95,7 +95,7 @@ Method 2
 
 2. Send requests to the server
    - The default host is 127.0.0.1, and the default port is 5000 (They can be configured in app.py)
-   - Sample request: http://127.0.0.1:5000/receipts/0d95b7e8-5f54-4aaa-9d53-fd1e819913e7/points
+   - Sample request: `http://127.0.0.1:5000/receipts/0d95b7e8-5f54-4aaa-9d53-fd1e819913e7/points`
 
 4. Press `Ctrl+C` to stop the application
 

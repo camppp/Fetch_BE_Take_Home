@@ -75,17 +75,19 @@ A Flask-based API server that processes receipts and calculates reward points ba
 
 ## Testing
 
-Method 1 (Recommended)
+**Method 1 (Recommended)**
   ```bash
   docker run receipt-processor-app-test
   ```
 
-Method 2
+**Method 2**
   ```bash
   pytest test.py
   ```
    
-## Usage Method 1 (Recommended)
+## Usage 
+
+**Method 1 (Recommended)**
 
 1. Run the application using Docker
    
@@ -99,7 +101,7 @@ Method 2
 
 4. Press `Ctrl+C` to stop the application
 
-## Usage Method 2
+**Method 2**
 
 1. Run the application using Python
    

@@ -8,34 +8,35 @@ A Flask-based API server that processes receipts and calculates reward points ba
 - [Design Considerations](#design-considerations)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
+- [Testing](#testing)
 - [Usage](#usage)
 
 ## Features
 
-1. Process receipt API: Process uploaded JSON receipts, and return the generated receipt UUID
+1. Process receipt API: Process uploaded JSON receipts and return the generated receipt UUID
 - Validate the format and fields of the receipt JSON
 - Calculate and store the reward points from the receipt according to certain rules
 2. Get Points API: Allow the user to look up reward points for specific receipts by providing the receipt UUID
 3. Concurrent request processing for both the process receipt and get points API
-4. Extensive test suite written with PyTest, and appropriate application error handling
+4. Extensive test suite written with pytest, and appropriate application error handling
 5. Support for containerization with Docker
 
 ## Design Considerations
 1. There could be a large number of concurrent requests for both APIs
    - Enable threading in the Flask application
-   - Provide UUID for each receipt in order to eliminate race cinditions
-2. The process to calculate reward points should only happend once for each receipt 
+   - Provide UUID for each receipt in order to eliminate race conditions
+2. The process to calculate reward points should only happen once for each receipt 
    - Calculate reward points during the process receipt API, and store the result for future get points requests
    - On the other hand, if this is done during the get points API, the application will become very inefficient. Because it may cause a lot of repeated work
 3. The get points API should be idempotent
 4. The JSON receipt parameter in the process receipt API may contain invalid JSON structures, invalid types, and invalid field values
    - Validate the JSON receipt format as the first step in the process receipt API
-   - Validate the JSON field value strings with Regex as the first step in each rewards points calculation section
+   - Validate the JSON field value strings with Regex as the first step in each reward points calculation section
    - These two validation stages are separated to provide more flexibility when reward rules change
 5. The application should be able to recover from failures, and the problem cause should be visible to the user
-   - Provide accurate error messages, and use a centralizaed location to handle application errors, which then sends the corresponding status code to the user
+   - Provide accurate error messages, and use a centralized location to handle application errors, which then sends the corresponding status code to the user
 6. The application should be well-tested, and should support many platforms
-   - Implement a full test suite in PyTest, and follow the TDD process
+   - Implement a full test suite in pytest, and follow the TDD process
    - Containerize the application with Docker. This way, developers and users can easily run and deploy the application under different hardware and OS 
 
 ## Prerequisites
@@ -86,14 +87,17 @@ Method 2
    
 ## Usage Method 1 (Recommended)
 
-1. Run the application using docker
+1. Run the application using Docker
    
    ```bash
     docker run -d -p 5000:5000 receipt-processor-app
     ```
 
-2. Send requests to the server:
-3. Press `Ctrl+C` to stop the application
+2. Send requests to the server
+   - The default host is 127.0.0.1, and the default port is 5000 (They can be configured in app.py)
+   - Sample request: http://127.0.0.1:5000/receipts/0d95b7e8-5f54-4aaa-9d53-fd1e819913e7/points
+
+4. Press `Ctrl+C` to stop the application
 
 ## Usage Method 2
 
@@ -103,5 +107,5 @@ Method 2
     python app.py
     ```
 
-2. Send requests to the server:
+2. Send requests to the server
 3. Press `Ctrl+C` to stop the application
